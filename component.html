@@ -1,0 +1,82 @@
+<polymer-element name="ceci-snaredrum" attributes="source speed label value textcolor buttoncolor buttonactivecolor"
+  value="Click" extends="ceci-element"
+  textcolor="#ffffff"
+  buttoncolor="#4DB227"
+  buttonactivecolor="#358915"
+  speed="1.0">
+  <ceci-definition>
+    {
+      "tags": ["button", "click", "tap"],
+      "thumbnail": "./thumbnail.png",
+      "description": "Broadcasts a \"click\" when clicked.",
+      "name": "Snare Drum",
+      "broadcasts": {},
+      "listeners": {
+        "kick": {
+          "description": "Causes a fake click event to occur.",
+          "label": "Kick",
+          "default": true
+        }
+      },
+      "attributes": {
+      }
+    }
+  </ceci-definition>
+  <template>
+    <link rel="stylesheet" href="component.css"></link>
+    <div id="kick" class="off" on-mousedown="{{kickon}}" on-mouseup="{{kickoff}}"></div>
+    <audio id="kicksound" src="sounds/kick.mp3" preload=preload></audio>
+    <shadow></shadow>
+  </template>
+  <script>
+    Polymer('ceci-snaredrum', {
+      ready: function () {
+        this.super();
+        var that = this;
+      },
+      kickon: function () {
+        this.$.kicksound.pause();
+        this.$.kicksound.currentTime = 0;
+        this.$.kicksound.play();
+        this.$.kick.classList.add("on");
+      },
+      kick : function(){
+        this.kickon();
+        var that = this;
+        window.setTimeout(function(){
+          that.kickoff();
+        },100)
+      },
+      kickoff : function(){
+        this.$.kick.classList.remove("on");
+      },
+      snare: function () {
+        this.$.snare.pause();
+        this.$.snare.currentTime = 0;
+        this.$.snare.play();
+      },
+      sourceChanged: function(oldValue, newValue) {
+        this.$.clip.src = newValue;
+      },
+      setSpeed: function(channel, value) {
+        this.speedChanged(this.$.snare.playbackRate || 1, value);
+        this.speedChanged(this.$.kick.playbackRate || 1, value);
+      },
+      speedChanged: function(oldValue, newValue) {
+        try  {
+          var f = parseFloat(newValue);
+          if (f) {
+            this.$.kick.playbackRate = parseFloat(newValue);
+            this.$.snare.playbackRate = parseFloat(newValue);
+          }
+        } catch (e) {}
+      },
+      textcolorChanged: function (oldValue, newValue) {
+        this.$.button.style.color = newValue;
+      },
+      buttoncolorChanged: function (oldValue, newValue) {
+        this.$.button.style.backgroundColor = newValue;
+      }
+    });
+  </script>
+</polymer-element>
