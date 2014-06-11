@@ -1,4 +1,4 @@
-<polymer-element name="ceci-snaredrum" attributes="source speed label value textcolor buttoncolor buttonactivecolor"
+<polymer-element name="ceci-kickdrum" attributes="source speed label value textcolor buttoncolor buttonactivecolor"
   value="Click" extends="ceci-element"
   textcolor="#ffffff"
   buttoncolor="#4DB227"
@@ -9,7 +9,7 @@
       "tags": ["button", "click", "tap"],
       "thumbnail": "./thumbnail.png",
       "description": "Broadcasts a \"click\" when clicked.",
-      "name": "Snare Drum",
+      "name": "Kick Drum",
       "broadcasts": {},
       "listeners": {
         "kick": {
@@ -29,7 +29,7 @@
     <shadow></shadow>
   </template>
   <script>
-    Polymer('ceci-snaredrum', {
+    Polymer('ceci-kickdrum', {
       ready: function () {
         this.super();
         var that = this;
