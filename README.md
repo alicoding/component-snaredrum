@@ -1,4 +1,4 @@
 component-kickdrum
 ==================
 
-A kick drum brick for Appmaker.
+A kick drum brick for Appmaker!
