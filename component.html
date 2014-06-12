@@ -1,35 +1,51 @@
-<polymer-element name="ceci-kickdrum" attributes="source speed label value textcolor buttoncolor buttonactivecolor"
-  value="Click" extends="ceci-element"
-  textcolor="#ffffff"
-  buttoncolor="#4DB227"
-  buttonactivecolor="#358915"
+<polymer-element name="ceci-snaredrum" attributes="drumcolor backgroundcolor stickcolor"
+  drumcolor="#FFFFFF"
+  stickcolor="#000000"
+  backgroundcolor="#ff9900"
+  extends="ceci-element"
   speed="1.0">
   <ceci-definition>
     {
-      "tags": ["button", "click", "tap"],
+      "tags": ["music", "instrument", "tap"],
       "thumbnail": "./thumbnail.png",
       "description": "Broadcasts a \"click\" when clicked.",
-      "name": "Kick Drum",
+      "name": "Snare Drum",
       "broadcasts": {},
       "listeners": {
         "kick": {
           "description": "Causes a fake click event to occur.",
-          "label": "Kick",
+          "label": "Hit",
           "default": true
         }
       },
       "attributes": {
+        "stickcolor": {
+          "label": "Stick Color",
+          "editable": "color"
+        },
+        "backgroundcolor": {
+          "label": "Background Color",
+          "editable": "color"
+        },
+        "drumcolor": {
+          "label": "Drum Color",
+          "description": "Color of the drum.",
+          "editable": "color"
+        }
       }
     }
   </ceci-definition>
   <template>
     <link rel="stylesheet" href="component.css"></link>
-    <div id="kick" class="off" on-mousedown="{{kickon}}" on-mouseup="{{kickoff}}"></div>
-    <audio id="kicksound" src="sounds/kick.mp3" preload=preload></audio>
+    <div id="kick" class="off" on-mousedown="{{kickon}}" on-mouseup="{{kickoff}}">
+      <div id="drum"></div>
+      <div id="stick"></div>
+    </div>
+    <audio id="kicksound" src="sounds/snare.mp3" preload=preload></audio>
     <shadow></shadow>
   </template>
   <script>
-    Polymer('ceci-kickdrum', {
+    Polymer('ceci-snaredrum', {
       ready: function () {
         this.super();
         var that = this;
@@ -38,7 +54,7 @@
         this.$.kicksound.pause();
         this.$.kicksound.currentTime = 0;
         this.$.kicksound.play();
-        this.$.kick.classList.add("on");
+        this.$.kick.classList.add("hit");
       },
       kick : function(){
         this.kickon();
@@ -48,7 +64,7 @@
         },100)
       },
       kickoff : function(){
-        this.$.kick.classList.remove("on");
+        this.$.kick.classList.remove("hit");
       },
       snare: function () {
         this.$.snare.pause();
@@ -71,11 +87,14 @@
           }
         } catch (e) {}
       },
-      textcolorChanged: function (oldValue, newValue) {
-        this.$.button.style.color = newValue;
+      stickcolorChanged: function (oldValue, newValue) {
+        this.$.stick.style.background = newValue;
       },
-      buttoncolorChanged: function (oldValue, newValue) {
-        this.$.button.style.backgroundColor = newValue;
+      drumcolorChanged: function (oldValue, newValue) {
+        this.$.drum.style.background = newValue;
+      },
+      backgroundcolorChanged: function (oldValue, newValue) {
+        this.$.kick.style.background = newValue;
       }
     });
   </script>

@@ -1,4 +1,4 @@
 component-kickdrum
 ==================
 
-A kick drum brick for Appmaker!
+This is a brick that plays a kick drum sound.
